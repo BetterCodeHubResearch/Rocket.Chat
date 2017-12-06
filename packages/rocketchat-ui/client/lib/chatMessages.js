@@ -370,16 +370,6 @@ this.ChatMessages = class ChatMessages {
 		}
 	}
 
-	tryCompletion(input) {
-		const [value] = input.value.match(/[^\s]+$/) || [];
-		if (!value) { return; }
-		const re = new RegExp(value, 'i');
-		const user = Meteor.users.findOne({username: re});
-		if (user) {
-			return input.value = input.value.replace(value, `@${ user.username } `);
-		}
-	}
-
 	restoreText(rid) {
 		const text = localStorage.getItem(`messagebox_${ rid }`);
 		if (typeof text === 'string' && this.input) {
@@ -445,14 +435,6 @@ this.ChatMessages = class ChatMessages {
 					return;
 				}
 			}
-		}
-
-
-
-		if (k === 9) { // Tab
-			event.preventDefault();
-			event.stopPropagation();
-			this.tryCompletion(input);
 		}
 
 		if (k === 27) { // Escape
